@@ -13,8 +13,25 @@ describe('Order', () => {
             doses: 3,
             totalMedicine: 9,
           },
+          {
+            medicineId: '1',
+            timesPerDay: 2,
+            doses: 3,
+            totalMedicine: 9,
+          },
         ],
+        diseases: ['migraine'],
       }
+      request(app)
+        .post('/orders')
+        .send(body)
+        .end((err, res) => {
+          expect(res.status).toBe(201)
+          expect(res.body).toHaveProperty('appointment')
+          expect(res.body).toHaveProperty('medicines')
+          expect(res.body).toHaveProperty('diseases')
+          done()
+        })
     })
   })
 })
