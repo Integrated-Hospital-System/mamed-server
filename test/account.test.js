@@ -47,21 +47,6 @@ describe('Account', () => {
                 start: '9:15',
                 end: '15:45',
               },
-              {
-                day: 'wednesday',
-                start: '9:15',
-                end: '15:45',
-              },
-              {
-                day: 'thursday',
-                start: '9:15',
-                end: '15:45',
-              },
-              {
-                day: 'friday',
-                start: '9:15',
-                end: '11:45',
-              },
             ],
             age: 28,
             gender: 'male',

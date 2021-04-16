@@ -1,3 +1,4 @@
+const env = process.env.NODE_ENV
 const getDBName = () => {
   const localhost = 'mongodb://localhost:27017/'
   switch (env) {
