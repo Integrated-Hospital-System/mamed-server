@@ -1,3 +1,4 @@
+const env = process.env.NODE_ENV
 const getDBName = () => {
   switch (env) {
     case 'development':
