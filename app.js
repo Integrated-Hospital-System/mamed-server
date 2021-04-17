@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 const app = express()
 
 const connection = require('./helpers/db-connection')
+const errorHandler = require('./middlewares/error-handler')
+const router = require('./routes')
 
 mongoose
   .connect(connection.getDBName(), {
@@ -15,11 +17,10 @@ mongoose
   .then(() => console.log('connected to DB'))
   .catch((error) => console.error(error))
 
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
 
-app.get('/sandbox', (req, res) =>
-  res.status(200).json({ message: 'hello sandbox' })
-)
+app.use(router)
 
+app.use(errorHandler)
 module.exports = app

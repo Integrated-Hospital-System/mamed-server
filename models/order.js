@@ -1,0 +1,26 @@
+const { Schema, model } = require('mongoose')
+
+const options = {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id
+  },
+}
+
+const medicineSchema = new Schema({
+  medicine: { type: Schema.Types.ObjectId, ref: 'Medicine' },
+  timesPerDay: Number,
+  doses: Number,
+  totalMedicine: Number,
+})
+
+const orderSchema = new Schema({
+  appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' },
+  medicines: [medicineSchema],
+  diseases: [String],
+})
+
+const Order = new model('Order', orderSchema, options)
+
+module.exports = { Order }
