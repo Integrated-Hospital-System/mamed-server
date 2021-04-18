@@ -1,6 +1,14 @@
 const { Account } = require('../models/account')
 
 class AccountController {
+  static index = async (req, res, next) => {
+    try {
+      const account = await Account.findById(req.account._id)
+      res.status(200).json(account)
+    } catch (error) {
+      next(error)
+    }
+  }
   static create = async (req, res, next) => {
     try {
       const { _id } = await new Account(req.body).save()

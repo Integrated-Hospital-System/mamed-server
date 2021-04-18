@@ -12,6 +12,8 @@ router
     AccountController.create
   )
 
+router.get('/index', AccountController.index)
+
 router
   .route('/:id')
   .get(AccountController.readOne)
