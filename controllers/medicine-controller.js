@@ -12,7 +12,7 @@ class MedicineController {
   }
   static readAll = async (req, res, next) => {
     try {
-      const medicines = await Account.find(req.query).lean()
+      const medicines = await Medicine.find(req.query).lean()
       res.status(200).json(medicines)
     } catch (error) {
       next(error)
