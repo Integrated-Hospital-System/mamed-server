@@ -19,9 +19,8 @@ module.exports = {
   },
   authorizePatient: async (req, res, next) => {
     try {
-      const { role } = req.account
-      if (role === 'Patient') return next()
-      if (role === 'Admin') return next()
+      if (req.account.role.toString() === 'Patient') return next()
+      if (req.account.role.toString() === 'Admin') return next()
       throw NamedError.AUTHORIZATION
     } catch (error) {
       next(error)
@@ -29,9 +28,8 @@ module.exports = {
   },
   authorizeDoctor: async (req, res, next) => {
     try {
-      const { role } = req.account
-      if (role === 'Doctor') return next()
-      if (role === 'Admin') return next()
+      if (req.account.role.toString() === 'Doctor') return next()
+      if (req.account.role.toString() === 'Admin') return next()
       throw NamedError.AUTHORIZATION
     } catch (error) {
       next(error)

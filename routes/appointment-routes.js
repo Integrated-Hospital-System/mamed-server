@@ -1,5 +1,8 @@
 const { AppointmentController } = require('../controllers')
 const {
+  AppointmentMiddleware,
+} = require('../middlewares/appointment-middleware')
+const {
   authorizePatient,
   authorizeDoctor,
 } = require('../middlewares/auth-middleware')
@@ -12,10 +15,18 @@ router
   .get(AppointmentController.readAll)
 
 router
-  .route('/id')
-  .get(AppointmentController.readOne)
-  .put(AppointmentController.update)
-  .patch(authorizeDoctor, AppointmentController.updateCompletion)
-  .delete(authorizeDoctor, AppointmentController.delete)
+  .route('/:id')
+  .get(AppointmentMiddleware.authorize, AppointmentController.readOne)
+  .put(AppointmentMiddleware.authorize, AppointmentController.update)
+  .patch(
+    authorizeDoctor,
+    AppointmentMiddleware.authorize,
+    AppointmentController.updateCompletion
+  )
+  .delete(
+    authorizeDoctor,
+    AppointmentMiddleware.authorize,
+    AppointmentController.delete
+  )
 
 module.exports = router
