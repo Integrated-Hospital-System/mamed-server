@@ -48,6 +48,7 @@ const doctorSchema = new Schema(
   {
     speciality: [String],
     practice: [practiceSchema],
+    image_url: String,
   },
   options
 )

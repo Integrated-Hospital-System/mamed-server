@@ -15,12 +15,15 @@ const medicineSchema = new Schema({
   totalMedicine: Number,
 })
 
-const orderSchema = new Schema({
-  appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' },
-  medicines: [medicineSchema],
-  diseases: [String],
-})
+const orderSchema = new Schema(
+  {
+    appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' },
+    medicines: [medicineSchema],
+    diseases: [String],
+  },
+  options
+)
 
-const Order = new model('Order', orderSchema, options)
+const Order = new model('Order', orderSchema)
 
 module.exports = { Order }

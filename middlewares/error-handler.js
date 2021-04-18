@@ -5,6 +5,27 @@ module.exports = (err, req, res, next) => {
   let status, message
 
   switch (err.name) {
+    case NamedError.BAD_LOGIN.name:
+      status = 400
+      message = ['email or password cannot be empty']
+      break
+    case NamedError.LOGIN.name:
+      status = 401
+      message = ['invalid email or password']
+      break
+    case 'JsonWebTokenError':
+    case NamedError.AUTHENTICATION.name:
+      status = 401
+      message = ['user not authenticated']
+      break
+    case NamedError.AUTHORIZATION.name:
+      status = 401
+      message = ['user not authorized']
+      break
+    case NamedError.NOT_FOUND.name:
+      status = 404
+      message = ['data not found']
+      break
     case NamedError.INVALID_ROLE.name:
       status = 400
       message = [`Invalid role of ${req.body.role}`]
@@ -18,8 +39,8 @@ module.exports = (err, req, res, next) => {
       message = Object.entries(err.errors).map(([key, value]) => value.message)
       break
     default:
-      console.error(JSON.stringify(err, null, 2), '<<><< error')
-      console.error(err)
+      console.error(JSON.stringify(err, null, 2), '<< JSON Error')
+      console.error(err, 'masuk sini')
       status = 500
       message = ['internal server error']
       break

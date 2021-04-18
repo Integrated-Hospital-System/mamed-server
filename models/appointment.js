@@ -8,13 +8,16 @@ const options = {
   },
 }
 
-const appointmentSchema = new Schema({
-  doctor: { type: Schema.Types.ObjectId, ref: 'Account' },
-  patient: { type: Schema.Types.ObjectId, ref: 'Account' },
-  appointmentDate: { type: Date, required: [true, 'Date cannot be empty'] },
-  isCompleted: { type: Boolean, default: false },
-})
+const appointmentSchema = new Schema(
+  {
+    doctor: { type: Schema.Types.ObjectId, ref: 'Account' },
+    patient: { type: Schema.Types.ObjectId, ref: 'Account' },
+    appointmentDate: { type: Date, required: [true, 'Date cannot be empty'] },
+    isCompleted: { type: Boolean, default: false },
+  },
+  options
+)
 
-const Appointment = new model('Appointment', appointmentSchema, options)
+const Appointment = new model('Appointment', appointmentSchema)
 
 module.exports = { Appointment }

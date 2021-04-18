@@ -8,12 +8,15 @@ const options = {
   },
 }
 
-const medicineSchema = new Schema({
-  name: { type: String, required: [true, 'Medicine name is required'] },
-  description: String,
-  stock: Number,
-})
+const medicineSchema = new Schema(
+  {
+    name: { type: String, required: [true, 'Medicine name is required'] },
+    description: String,
+    stock: Number,
+  },
+  options
+)
 
-const Medicine = new model('Medicine', medicineSchema, options)
+const Medicine = new model('Medicine', medicineSchema)
 
 module.exports = { Medicine }
