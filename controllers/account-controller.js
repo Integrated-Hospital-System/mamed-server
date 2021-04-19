@@ -36,6 +36,10 @@ class AccountController {
   }
   static update = async (req, res, next) => {
     try {
+      const acc = await Account.findByIdAndUpdate(req.params.id)
+      if (acc.role === 'Doctor') acc.practice = req.body.practice
+      if (acc.role === 'Patient') acc.comorbid = req.body.comorbid
+      await acc.save()
       const account = await Account.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
       })

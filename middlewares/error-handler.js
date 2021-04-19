@@ -34,6 +34,10 @@ module.exports = (err, req, res, next) => {
       status = 400
       message = ['use /register for creating patient']
       break
+    case NamedError.RECREATE_ORDER.name:
+      status = 400
+      message = ['Cannot re-create order, use update instead!']
+      break
     case 'ValidationError':
       status = 400
       message = Object.entries(err.errors).map(([key, value]) => value.message)

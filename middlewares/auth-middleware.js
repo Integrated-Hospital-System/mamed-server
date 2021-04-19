@@ -28,6 +28,7 @@ module.exports = {
   },
   authorizeDoctor: async (req, res, next) => {
     try {
+      console.log(JSON.stringify(req.account, null, 2))
       if (req.account.role.toString() === 'Doctor') return next()
       if (req.account.role.toString() === 'Admin') return next()
       throw NamedError.AUTHORIZATION

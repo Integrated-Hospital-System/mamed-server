@@ -9,7 +9,7 @@ router
   .get(MedicineController.readAll)
 
 router
-  .route('/id')
+  .route('/:id')
   .get(MedicineController.readOne)
   .put(authorizeDoctor, MedicineController.update)
   .delete(authorizeDoctor, MedicineController.delete)

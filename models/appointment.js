@@ -17,6 +17,7 @@ const appointmentSchema = new Schema(
       required: [true, 'appointmentDate cannot be empty'],
     },
     isCompleted: { type: Boolean, default: false },
+    order: { type: Schema.Types.ObjectId, ref: 'Order' },
   },
   options
 )

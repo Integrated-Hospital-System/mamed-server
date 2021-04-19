@@ -13,5 +13,6 @@ module.exports = {
     AUTHORIZATION: errorWithName('AuthorizationError'),
     INVALID_ROLE: errorWithName('InvalidRoleError'),
     USE_REGISTER: errorWithName('UseRegisterError'),
+    RECREATE_ORDER: errorWithName('RecreateOrderError'),
   },
 }
