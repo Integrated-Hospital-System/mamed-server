@@ -88,12 +88,21 @@ class OrderController {
   }
   static update = async (req, res, next) => {
     try {
+      const { appointmentId } = req.params
+      const order = await Order.findOne({ appointment: appointmentId })
+      order.medicines = req.body.medicines
+      order.diseases = req.body.diseases
+      await order.save()
+      res.status(200).json(order)
     } catch (error) {
       next(error)
     }
   }
   static delete = async (req, res, next) => {
     try {
+      const { appointmentId } = req.params
+      await Order.findOneAndDelete({ appointment: appointmentId })
+      res.status(200).json({ message: 'Order successfully deleted' })
     } catch (error) {
       next(error)
     }
