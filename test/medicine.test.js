@@ -1,5 +1,36 @@
+require('dotenv').config()
+const mongoose = require('mongoose')
 const request = require('supertest')
 const app = require('../app')
+const connection = require('../helpers/db-connection')
+const { Admin } = require('../models/account')
+
+const admin = {
+  name: 'Admin',
+  email: 'admin@email.com',
+  password: 'test1234',
+}
+
+let access_token, doctorId, patientId
+
+beforeAll((done) => {
+  const resetDB = async () => {
+    await mongoose.connect(connection.getDBName(), {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+
+
+
+      
+    })
+    await mongoose.connection.db.dropDatabase(connection.getDBName())
+    await new Admin(admin).save()
+    done()
+  }
+  resetDB()
+})
+
+
 
 describe('Medicine', () => {
   describe('Create Medicine', () => {
