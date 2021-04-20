@@ -251,7 +251,43 @@ describe('Account', () => {
   })
   describe('Update One Account', () => {
     describe('PUT /accounts/:id', () => {
-      describe('Correct request(s)', () => {})
+      describe('Correct request(s)', () => {
+        it('Should return updated Doctor', async (done) => {
+          const id = doctorId.toString()
+          const practice = {
+            day: 'sunday',
+            start: '0:00',
+            end: '23:59',
+          }
+          const body = {
+            name: 'Razzil the greed Doctor',
+            practice: [practice],
+          }
+          const res = await request(app)
+            .put(`/accounts/${id}`)
+            .send(body)
+            .set({ access_token })
+          expect(res.status).toBe(200)
+          expect(res.body.practice[0]).toMatchObject(practice)
+          done()
+        })
+        it('Should return updated Patient', async (done) => {
+          const id = patientId.toString()
+          const comorbid = 'gonorhea'
+          const body = {
+            name: 'Dawnbreaker the sick man',
+            comorbid: [comorbid],
+          }
+          const res = await request(app)
+            .put(`/accounts/${id}`)
+            .send({ ...body, password: 'dota1234' })
+            .set({ access_token })
+          expect(res.status).toBe(200)
+          expect(res.body).toMatchObject(body)
+          expect(res.body).toHaveProperty('name', body.name)
+          done()
+        })
+      })
       describe('Incorrect request(s)', () => {})
     })
   })
@@ -279,7 +315,15 @@ describe('Account', () => {
           done()
         })
       })
-      describe('Incorrect request(s)', () => {})
+      describe('Incorrect request(s)', () => {
+        it('Should return error indicating access_token is required', async (done) => {
+          const res = await request(app).delete(
+            `/accounts/${patientId.toString()}`
+          )
+          expect(res.status).toBe(401)
+          done()
+        })
+      })
     })
   })
 })
