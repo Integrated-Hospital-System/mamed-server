@@ -4,7 +4,6 @@ const request = require('supertest')
 const app = require('../app')
 const connection = require('../helpers/db-connection')
 const { Admin } = require('../models/account')
-
 const admin = {
   name: 'Admin',
   email: 'admin@email.com',
@@ -42,7 +41,7 @@ describe('Medicine', () => {
             .post('/medicines')
             .send(body)
             .set({ access_token })
-            
+
           expect(res.status).toBe(201)
           expect(res.body).toHaveProperty('_id')
           expect(res.body).toHaveProperty('name', body.name)
@@ -64,10 +63,9 @@ describe('Medicine', () => {
             .send(body)
             .set({ access_token })
           expect(res.status).toBe(400)
-          expect(res.body).toHaveProperty(
-            'message',
-            ["Medicine name is required"]
-          )        
+          expect(res.body).toHaveProperty('message', [
+            'Medicine name is required',
+          ])
           done()
         })
       })
@@ -101,7 +99,6 @@ describe('Medicine', () => {
           expect(res.status).toBe(200)
           expect(res.body).toHaveProperty('_id', id)
           done()
-            
         })
       })
       describe('Incorrect request(s)', () => {
@@ -111,12 +108,8 @@ describe('Medicine', () => {
             .get(`/medicines/${id}acd`)
             .set({ access_token })
           expect(res.status).toBe(500)
-          expect(res.body).toHaveProperty(
-            'message',
-            ["internal server error"]
-          )
+          expect(res.body).toHaveProperty('message', ['internal server error'])
           done()
-            
         })
       })
     })
@@ -144,19 +137,14 @@ describe('Medicine', () => {
       describe('Incorrect requests', () => {
         it('Should return medicine name is required', async (done) => {
           const id = medicineId.toString()
-          const body = {
-
-          }
+          const body = {}
           const res = await request(app)
             .put(`/medicines/${id}a`)
             .set({ access_token })
             .send(body)
           expect(res.status).toBe(500)
-          expect(res.body).toHaveProperty(
-            'message',
-            ["internal server error"]
-          )
-          done();
+          expect(res.body).toHaveProperty('message', ['internal server error'])
+          done()
         })
       })
     })
@@ -168,14 +156,14 @@ describe('Medicine', () => {
           const id = medicineId.toString()
           const res = await request(app)
             .delete(`/medicines/${id}`)
-            .set({ access_token })  
+            .set({ access_token })
 
-            expect(res.status).toBe(200)
-            expect(res.body).toHaveProperty(
-              'message',
-              'Medicine successfully deleted'
-            )
-            done();
+          expect(res.status).toBe(200)
+          expect(res.body).toHaveProperty(
+            'message',
+            'Medicine successfully deleted'
+          )
+          done()
         })
       })
 
@@ -184,17 +172,13 @@ describe('Medicine', () => {
           const id = medicineId.toString()
           const res = await request(app)
             .delete(`/medicines/${id} + a`)
-            .set({ access_token })  
+            .set({ access_token })
 
-            expect(res.status).toBe(500)
-            expect(res.body).toHaveProperty(
-              'message',
-              ["internal server error"]
-            )
-            done();
+          expect(res.status).toBe(500)
+          expect(res.body).toHaveProperty('message', ['internal server error'])
+          done()
         })
       })
-
     })
   })
 })
