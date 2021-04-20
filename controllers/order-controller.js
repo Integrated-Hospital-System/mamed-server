@@ -90,8 +90,10 @@ class OrderController {
     try {
       const { appointmentId } = req.params
       const order = await Order.findOne({ appointment: appointmentId })
-      order.medicines = req.body.medicines
-      order.diseases = req.body.diseases
+      if (req.body.medicines) order.medicines = req.body.medicines
+      if (req.body.diseases) order.diseases = req.body.diseases
+      delete req.body.medicines
+      delete req.body.diseases
       await order.save()
       res.status(200).json(order)
     } catch (error) {

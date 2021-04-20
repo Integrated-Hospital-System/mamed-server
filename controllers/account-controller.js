@@ -11,10 +11,8 @@ class AccountController {
   }
   static create = async (req, res, next) => {
     try {
-      console.log('test masuk')
       const { _id } = await new Account(req.body).save()
       const account = await Account.findById(_id).lean()
-      console.log(account)
       res.status(201).json(account)
     } catch (error) {
       next(error)

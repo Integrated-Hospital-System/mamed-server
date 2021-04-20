@@ -103,20 +103,17 @@ describe('Account', () => {
           const res = await request(app).post('/login').send(body)
           expect(res.status).toBe(401)
           expect(res.body.message[0]).toBe('invalid email or password')
-          console.log(res.body)
           done()
         })
         it('Should return error indicating required field empty', async (done) => {
           const res = await request(app).post('/login').send({})
           expect(res.status).toBe(400)
-          console.log(res.body)
           done()
         })
         it('Should return error indicating email not registered in database', async (done) => {
           const body = { email: 'anonym@email.com' }
           const res = await request(app).post('/login').send(body)
           expect(res.status).toBe(400)
-          console.log(res.body)
           done()
         })
       })
@@ -246,6 +243,14 @@ describe('Account', () => {
           expect(res.status).toBe(401)
           done()
         })
+        it('Should return error indicating id is incorrect', async (done) => {
+          const id = doctorId.toString()
+          const res = await request(app)
+            .get(`/accounts/${id}a`)
+            .set({ access_token })
+          expect(res.status).toBe(500)
+          done()
+        })
       })
     })
   })
@@ -288,7 +293,26 @@ describe('Account', () => {
           done()
         })
       })
-      describe('Incorrect request(s)', () => {})
+      describe('Incorrect request(s)', () => {
+        it('Should return error indicating id is incorrect', async (done) => {
+          const id = doctorId.toString()
+          const practice = {
+            day: 'sunday',
+            start: '0:00',
+            end: '23:59',
+          }
+          const body = {
+            name: 'Razzil the greed Doctor',
+            practice: [practice],
+          }
+          const res = await request(app)
+            .put(`/accounts/${id}a`)
+            .send(body)
+            .set({ access_token })
+          expect(res.status).toBe(500)
+          done()
+        })
+      })
     })
   })
   describe('Delete One Account', () => {
@@ -321,6 +345,13 @@ describe('Account', () => {
             `/accounts/${patientId.toString()}`
           )
           expect(res.status).toBe(401)
+          done()
+        })
+        it('Should return error indicating id is incorrect', async (done) => {
+          const res = await request(app)
+            .delete(`/accounts/${patientId.toString()}a`)
+            .set({ access_token })
+          expect(res.status).toBe(500)
           done()
         })
       })

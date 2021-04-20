@@ -3,9 +3,6 @@ const { Schema, model } = require('mongoose')
 const options = {
   virtuals: true,
   versionKey: false,
-  transform: function (doc, ret) {
-    delete ret._id
-  },
 }
 
 const medicineSchema = new Schema({

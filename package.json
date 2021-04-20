@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/http.js",
     "dev": "NODE_ENV=development npx nodemon ./bin/http.js",
-    "test": "NODE_ENV=test npx jest --coverage --detectOpenHandles --forceExit --runInBand"
+    "test": "NODE_ENV=test npx jest --coverage --detectOpenHandles --forceExit --runInBand --verbose=true --silent=false"
   },
   "keywords": [],
   "author": "",
