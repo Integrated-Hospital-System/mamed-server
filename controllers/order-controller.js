@@ -56,11 +56,17 @@ class OrderController {
       }
       const orders = await Appointment.find(query, 'order').populate({
         path: 'order',
-        populate: {
-          path: 'appointment',
-          select: { order: 0 },
-          populate: ['patient', 'doctor'],
-        },
+        populate: [
+          {
+            path: 'appointment',
+            select: { order: 0 },
+            populate: ['patient', 'doctor'],
+          },
+          {
+            path: 'medicines',
+            populate: 'medicine',
+          },
+        ],
       })
       const formatted = orders.map(this._formatOrder)
       res.status(200).json(formatted)
