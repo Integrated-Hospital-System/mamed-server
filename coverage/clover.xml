@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1618944313733" clover="3.2.0">
-  <project timestamp="1618944313733" name="All files">
+<coverage generated="1618970278061" clover="3.2.0">
+  <project timestamp="1618970278061" name="All files">
     <metrics statements="429" coveredstatements="398" conditionals="84" coveredconditionals="64" methods="49" coveredmethods="47" elements="562" coveredelements="509" complexity="0" loc="429" ncloc="429" packages="6" files="27" classes="27"/>
     <package name="mamed-server">
       <metrics statements="18" coveredstatements="17" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="1"/>
