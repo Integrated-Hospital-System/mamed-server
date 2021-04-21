@@ -12,6 +12,7 @@ const data = {
 
 const seed = async () => {
   try {
+    console.log(process.env.NODE_ENV)
     await mongoose.connect(connection.getDBName(), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
