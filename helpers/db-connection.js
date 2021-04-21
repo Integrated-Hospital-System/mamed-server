@@ -1,13 +1,13 @@
 const env = process.env.NODE_ENV
 const getDBName = () => {
-  const localhost = 'mongodb://localhost:27017/'
+  const host = process.env.ATLAS
   switch (env) {
     case 'development':
-      return localhost + process.env.DB_DEVELOPMENT
+      return host + process.env.DB_DEVELOPMENT
     case 'test':
-      return localhost + process.env.DB_TEST
+      return host + process.env.DB_TEST
     default:
-      return localhost + process.env.DB_PRODUCTION
+      return host + process.env.DB_PRODUCTION
   }
 }
 

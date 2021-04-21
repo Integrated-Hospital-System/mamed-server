@@ -9,7 +9,6 @@ class OrderMiddleware {
       if (req.account.role === 'Admin') return next()
       const { appointmentId } = req.params
       const appointment = await Appointment.findById(appointmentId)
-      console.log(JSON.stringify(appointment, null, 2))
       const order = await Order.findOne({ appointment: appointmentId })
       if (!order) throw NamedError.NOT_FOUND
       switch (req.account._id.toString()) {

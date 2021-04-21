@@ -56,11 +56,17 @@ class OrderController {
       }
       const orders = await Appointment.find(query, 'order').populate({
         path: 'order',
-        populate: {
-          path: 'appointment',
-          select: { order: 0 },
-          populate: ['patient', 'doctor'],
-        },
+        populate: [
+          {
+            path: 'appointment',
+            select: { order: 0 },
+            populate: ['patient', 'doctor'],
+          },
+          {
+            path: 'medicines',
+            populate: 'medicine',
+          },
+        ],
       })
       const formatted = orders.map(this._formatOrder)
       res.status(200).json(formatted)
@@ -90,8 +96,10 @@ class OrderController {
     try {
       const { appointmentId } = req.params
       const order = await Order.findOne({ appointment: appointmentId })
-      order.medicines = req.body.medicines
-      order.diseases = req.body.diseases
+      if (req.body.medicines) order.medicines = req.body.medicines
+      if (req.body.diseases) order.diseases = req.body.diseases
+      delete req.body.medicines
+      delete req.body.diseases
       await order.save()
       res.status(200).json(order)
     } catch (error) {

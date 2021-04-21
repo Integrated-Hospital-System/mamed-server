@@ -32,8 +32,10 @@ const accountSchema = new Schema(
   options
 )
 
-accountSchema.pre('save', function () {
+accountSchema.pre('save', function (next) {
+  if (!this.isModified('password')) return next()
   this.password = encrypt(this.password)
+  next()
 })
 
 const adminSchema = new Schema({}, options)

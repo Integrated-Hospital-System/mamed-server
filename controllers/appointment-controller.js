@@ -18,7 +18,7 @@ class AppointmentController {
         .populate('doctor')
         .populate('patient')
 
-      res.status(200).json(appointment)
+      res.status(201).json(appointment)
     } catch (error) {
       next(error)
     }

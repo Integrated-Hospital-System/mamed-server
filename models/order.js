@@ -3,9 +3,6 @@ const { Schema, model } = require('mongoose')
 const options = {
   virtuals: true,
   versionKey: false,
-  transform: function (doc, ret) {
-    delete ret._id
-  },
 }
 
 const medicineSchema = new Schema({
@@ -20,6 +17,7 @@ const orderSchema = new Schema(
     appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' },
     medicines: [medicineSchema],
     diseases: [String],
+    notes: String,
   },
   options
 )

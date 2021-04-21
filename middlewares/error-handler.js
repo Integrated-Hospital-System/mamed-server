@@ -1,7 +1,7 @@
 const { NamedError } = require('../helpers/error-formatter')
 
 module.exports = (err, req, res, next) => {
-  console.log(err.name)
+  // console.log(err.name)
   let status, message
 
   switch (err.name) {
@@ -43,8 +43,8 @@ module.exports = (err, req, res, next) => {
       message = Object.entries(err.errors).map(([key, value]) => value.message)
       break
     default:
-      console.error(JSON.stringify(err, null, 2), '<< JSON Error')
-      console.error(err, 'masuk sini')
+      // console.error(JSON.stringify(err, null, 2), '<< JSON Error')
+      // console.error(err, 'masuk sini')
       status = 500
       message = ['internal server error']
       break
