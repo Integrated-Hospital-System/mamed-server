@@ -207,7 +207,6 @@ describe('Order', () => {
           const diseases = ['migraine', 'back pain']
           const id = tester.appointment.id.toString()
           const body = { medicines, diseases }
-          console.log(id, ',,, appoinmt id')
           const { access_token } = tester.patient
           const res = await request(app)
             .post(`/orders/${id}`)
@@ -316,6 +315,16 @@ describe('Order', () => {
             .set({ access_token })
           expect(res.status).toBe(401)
           expect(res.body).toHaveProperty('message', ['user not authorized'])
+          done()
+        })
+        it('Should return error indicating order not found', async (done) => {
+          const id = tester.appointment2.id.toString()
+          const { access_token } = tester.doctor
+          const res = await request(app)
+            .get(`/orders/${id}`)
+            .set({ access_token })
+          expect(res.status).toBe(404)
+          expect(res.body).toHaveProperty('message', ['data not found'])
           done()
         })
       })

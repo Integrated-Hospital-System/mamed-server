@@ -160,7 +160,45 @@ describe('Account', () => {
           done()
         })
       })
-      describe('Incorrect request(s)', () => {})
+      describe('Incorrect request(s)', () => {
+        it('Should return error indicating cannot create patient error', async (done) => {
+          const body = {
+            name: 'Artour Babaev',
+            email: 'artour@gmail.com',
+            password: 'pass1234',
+            age: 21,
+          }
+          const res = await request(app)
+            .post('/accounts')
+            .send(body)
+            .set({ access_token })
+
+          expect(res.status).toBe(400)
+          expect(res.body).toHaveProperty('message', [
+            'use /register for creating patient',
+          ])
+          done()
+        })
+        it('Should return error indicating invalid role error', async (done) => {
+          const body = {
+            name: 'Artour Babaev',
+            email: 'artour@gmail.com',
+            password: 'pass1234',
+            age: 21,
+            role: 'Samurai',
+          }
+          const res = await request(app)
+            .post('/accounts')
+            .send(body)
+            .set({ access_token })
+
+          expect(res.status).toBe(400)
+          expect(res.body).toHaveProperty('message', [
+            `Invalid role of ${body.role}`,
+          ])
+          done()
+        })
+      })
     })
   })
   describe('Show Current User', () => {

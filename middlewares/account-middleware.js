@@ -4,8 +4,8 @@ class AccountMiddleware {
   static assignRole = (req, res, next) => {
     if (!req?.body?.role) req.body.role = ''
     switch (req.body.role) {
-      case 'Patient':
       case 'Doctor':
+      case 'Patient':
         return next()
       case '':
         req.body.role = 'Patient'
